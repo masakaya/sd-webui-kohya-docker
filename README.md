@@ -41,13 +41,21 @@ cd sd-webui-kohya-docker
 make setup
 ```
 
-3. サービスを起動
+3. Stable Diffusion v1.5モデルをダウンロード
+
+```bash
+make download-model
+```
+
+このコマンドは約4GBのモデルファイル（v1-5-pruned-emaonly.safetensors）をダウンロードします。既にモデルが存在する場合はスキップされます。
+
+4. サービスを起動
 
 ```bash
 make up
 ```
 
-初回起動時は、Dockerイメージのダウンロードとモデルのダウンロードに時間がかかります。
+初回起動時は、Dockerイメージのダウンロードに時間がかかります。
 
 ## 使用方法
 
@@ -61,6 +69,7 @@ make up
 | コマンド | 説明 |
 |---------|------|
 | `make setup` | 必要なディレクトリを作成 |
+| `make download-model` | Stable Diffusion v1.5モデルを自動ダウンロード |
 | `make up` | サービスをバックグラウンドで起動 |
 | `make down` | サービスを停止 |
 | `make logs` | 全サービスのログを表示 |
@@ -89,7 +98,17 @@ make up
 
 ### Stable Diffusionモデル
 
-Stable Diffusionのチェックポイントモデルは以下に配置してください：
+#### 自動ダウンロード（推奨）
+
+以下のコマンドでStable Diffusion v1.5モデルを自動的にダウンロードできます：
+
+```bash
+make download-model
+```
+
+#### 手動配置
+
+他のモデルを使用したい場合は、以下のディレクトリに手動で配置してください：
 
 ```
 webui/models/Stable-diffusion/
