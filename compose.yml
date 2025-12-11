@@ -1,0 +1,39 @@
+services:
+  webui:
+    image: universonic/stable-diffusion-webui:latest
+    container_name: sd-webui
+    ports:
+      - "7860:7860"
+    volumes:
+      - ./webui/models:/app/stable-diffusion-webui/models
+      - ./webui/outputs:/app/stable-diffusion-webui/outputs
+      - ./lora:/app/stable-diffusion-webui/models/Lora
+    environment:
+      - COMMANDLINE_ARGS=--listen --medvram --xformers
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    restart: unless-stopped
+
+  kohya:
+    image: bmaltais/kohya_ss:latest
+    container_name: kohya-gui
+    ports:
+      - "7861:7860"
+    volumes:
+      - ./kohya/training:/app/training
+      - ./kohya/outputs:/app/outputs
+      - ./lora:/app/lora
+      - ./webui/models/Stable-diffusion:/app/models
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    restart: unless-stopped
