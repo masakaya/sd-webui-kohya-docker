@@ -35,27 +35,31 @@ git clone https://github.com/masakaya/sd-webui-kohya-docker.git
 cd sd-webui-kohya-docker
 ```
 
-2. 必要なディレクトリを作成
+2. 必要なディレクトリを作成し、Kohya SSリポジトリをクローン
 
 ```bash
 make setup
 ```
 
-3. Stable Diffusion v1.5モデルをダウンロード
+3. Kohya SS用のDockerイメージをビルド
+
+```bash
+make build
+```
+
+4. Stable Diffusion v1.5モデルをダウンロード（オプション）
 
 ```bash
 make download-model
 ```
 
-このコマンドは約4GBのモデルファイル（v1-5-pruned-emaonly.safetensors）をダウンロードします。既にモデルが存在する場合はスキップされます。
+このコマンドは約4GBのモデルファイル（v1-5-pruned-emaonly.safetensors）をダウンロードします。既にモデルが存在する場合はスキップされます。他のモデルを使用する場合は手動で配置してください。
 
-4. サービスを起動
+5. サービスを起動
 
 ```bash
 make up
 ```
-
-初回起動時は、Dockerイメージのダウンロードに時間がかかります。
 
 ## 使用方法
 
