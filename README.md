@@ -153,7 +153,7 @@ docker run --rm --gpus all nvidia/cuda:12.0.0-base-ubuntu22.04 nvidia-smi
 
 ```yaml
 ports:
-  - "7860:7860"  # 別のポート番号に変更
+  - "7860:8080"  # 別のポート番号に変更
 ```
 
 ## ライセンス
