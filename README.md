@@ -89,10 +89,26 @@ make up
 │   │   └── Lora/       # LoRAモデル（共有）
 │   └── outputs/        # 生成画像
 ├── kohya/              # Kohya SS用ディレクトリ
-│   ├── training/       # トレーニングデータ
+│   ├── dataset/        # データセット用ディレクトリ
+│   │   └── images/     # トレーニング画像（コンテナ内: /app/data）
+│   │       └── [繰り返し数]_[識別名]/  # 例: 5_sks, 10_character
 │   └── outputs/        # トレーニング結果
 └── lora/               # LoRAモデル（共有）
 ```
+
+### トレーニングデータの配置
+
+Kohya SSでLoRAトレーニングを行う場合、画像は以下のディレクトリに配置します：
+
+```
+kohya/dataset/images/[繰り返し数]_[識別名]/
+```
+
+例：
+- `kohya/dataset/images/5_sks/` - 5回繰り返し、識別名 "sks"
+- `kohya/dataset/images/10_character/` - 10回繰り返し、識別名 "character"
+
+各画像には対応するキャプションファイル（.txt）を用意するか、Kohya SSのBLIP機能で自動生成できます。
 
 ## モデルの配置
 

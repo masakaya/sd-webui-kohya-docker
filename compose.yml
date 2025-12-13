@@ -2,8 +2,9 @@ services:
   webui:
     image: universonic/stable-diffusion-webui:latest
     container_name: sd-webui
+    user: "1000:1000"
     ports:
-      - "7860:7860"
+      - "7860:8080"
     volumes:
       - ./webui/models:/app/stable-diffusion-webui/models
       - ./webui/outputs:/app/stable-diffusion-webui/outputs
@@ -20,20 +21,35 @@ services:
     restart: unless-stopped
 
   kohya:
-    image: bmaltais/kohya_ss:latest
     container_name: kohya-gui
+    build:
+      context: ./kohya_ss_src
+      args:
+        - UID=1000
+    user: "1000:0"
     ports:
       - "7861:7860"
+    environment:
+      SAFETENSORS_FAST_GPU: 1
+    tmpfs:
+      - /tmp
     volumes:
-      - ./kohya/training:/app/training
+      - ./kohya/dataset:/dataset
+      - ./kohya/dataset/images:/app/data
+      - ./kohya/dataset/logs:/app/logs
       - ./kohya/outputs:/app/outputs
       - ./lora:/app/lora
       - ./webui/models/Stable-diffusion:/app/models
+      - ./kohya/.cache/config:/app/config
+      - ./kohya/.cache/user:/home/1000/.cache
+      - ./kohya/.cache/triton:/home/1000/.triton
+      - ./kohya/.cache/nv:/home/1000/.nv
+      - ./kohya/.cache/keras:/home/1000/.keras
     deploy:
       resources:
         reservations:
           devices:
             - driver: nvidia
-              count: all
               capabilities: [gpu]
+              device_ids: ["all"]
     restart: unless-stopped

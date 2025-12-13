@@ -3,6 +3,9 @@ webui/
 kohya/
 lora/
 
+# Kohya SS source (cloned for build)
+kohya_ss_src/
+
 # OS files
 .DS_Store
 Thumbs.db
