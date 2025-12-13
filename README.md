@@ -68,7 +68,9 @@ make up
 
 | コマンド | 説明 |
 |---------|------|
-| `make setup` | 必要なディレクトリを作成 |
+| `make setup` | 必要なディレクトリを作成（Kohya SSリポジトリのクローンを含む） |
+| `make setup-kohya` | Kohya SSリポジトリをクローン |
+| `make build` | Kohya SS用のDockerイメージをビルド |
 | `make download-model` | Stable Diffusion v1.5モデルを自動ダウンロード |
 | `make up` | サービスをバックグラウンドで起動 |
 | `make down` | サービスを停止 |
@@ -76,6 +78,7 @@ make up
 | `make logs-webui` | WebUIのログのみ表示 |
 | `make logs-kohya` | Kohyaのログのみ表示 |
 | `make clean` | サービスとボリュームを削除し、ディレクトリをクリーンアップ |
+| `make clean-images` | Dockerイメージも含めて完全にクリーンアップ |
 
 ## ディレクトリ構造
 
