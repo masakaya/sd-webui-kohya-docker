@@ -6,6 +6,7 @@ services:
     ports:
       - "7860:8080"
     volumes:
+      - ~/ai-models/stable-diffusion:/app/stable-diffusion-webui/models/Stable-diffusion
       - ./webui/models:/app/stable-diffusion-webui/models
       - ./webui/outputs:/app/stable-diffusion-webui/outputs
       - ./lora:/app/stable-diffusion-webui/models/Lora
@@ -39,7 +40,7 @@ services:
       - ./kohya/dataset/logs:/app/logs
       - ./kohya/outputs:/app/outputs
       - ./lora:/app/lora
-      - ./webui/models/Stable-diffusion:/app/models
+      - ~/ai-models/stable-diffusion:/app/models
       - ./kohya/.cache/config:/app/config
       - ./kohya/.cache/user:/home/1000/.cache
       - ./kohya/.cache/triton:/home/1000/.triton
