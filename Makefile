@@ -1,4 +1,6 @@
-.PHONY: setup setup-kohya download-model build up down logs logs-webui logs-kohya clean clean-images
+.PHONY: setup setup-kohya setup-models download-model build up down logs logs-webui logs-kohya clean clean-images
+
+MODELS_DIR := $(HOME)/ai-models
 
 setup: setup-kohya
 	mkdir -p webui/models/Stable-diffusion
@@ -39,13 +41,16 @@ setup-kohya:
 build: setup-kohya
 	docker compose build
 
-download-model:
+setup-models:
+	mkdir -p $(MODELS_DIR)/stable-diffusion
+	@echo "Shared models directory created at $(MODELS_DIR)"
+
+download-model: setup-models
 	@echo "Downloading Stable Diffusion v1.5 model..."
-	@mkdir -p webui/models/Stable-diffusion
-	@if [ ! -f webui/models/Stable-diffusion/v1-5-pruned-emaonly.safetensors ]; then \
-		wget -P webui/models/Stable-diffusion/ \
+	@if [ ! -f $(MODELS_DIR)/stable-diffusion/v1-5-pruned-emaonly.safetensors ]; then \
+		wget -P $(MODELS_DIR)/stable-diffusion/ \
 			https://huggingface.co/runwayml/stable-diffusion-v1-5/resolve/main/v1-5-pruned-emaonly.safetensors; \
-		echo "Model downloaded successfully!"; \
+		echo "Model downloaded to $(MODELS_DIR)/stable-diffusion/"; \
 	else \
 		echo "Model already exists. Skipping download."; \
 	fi

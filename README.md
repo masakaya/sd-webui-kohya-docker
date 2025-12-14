@@ -47,7 +47,7 @@ make setup
 make download-model
 ```
 
-このコマンドは約4GBのモデルファイル（v1-5-pruned-emaonly.safetensors）をダウンロードします。既にモデルが存在する場合はスキップされます。
+このコマンドは約4GBのモデルファイル（v1-5-pruned-emaonly.safetensors）を共有ディレクトリ `~/ai-models/stable-diffusion/` にダウンロードします。既にモデルが存在する場合はスキップされます。
 
 4. サービスを起動
 
@@ -70,6 +70,7 @@ make up
 |---------|------|
 | `make setup` | 必要なディレクトリを作成（Kohya SSリポジトリのクローンを含む） |
 | `make setup-kohya` | Kohya SSリポジトリをクローン |
+| `make setup-models` | 共有モデルディレクトリを作成（~/ai-models） |
 | `make build` | Kohya SS用のDockerイメージをビルド |
 | `make download-model` | Stable Diffusion v1.5モデルを自動ダウンロード |
 | `make up` | サービスをバックグラウンドで起動 |
@@ -87,9 +88,7 @@ make up
 ├── compose.yml          # Docker Compose設定
 ├── Makefile            # 管理用Makeファイル
 ├── webui/              # Stable Diffusion WebUI用ディレクトリ
-│   ├── models/         # モデルファイル
-│   │   ├── Stable-diffusion/  # チェックポイントモデル
-│   │   └── Lora/       # LoRAモデル（共有）
+│   ├── models/         # その他モデルファイル（VAE, ControlNet等）
 │   └── outputs/        # 生成画像
 ├── kohya/              # Kohya SS用ディレクトリ
 │   ├── dataset/        # データセット用ディレクトリ
@@ -97,6 +96,9 @@ make up
 │   │       └── [繰り返し数]_[識別名]/  # 例: 5_sks, 10_character
 │   └── outputs/        # トレーニング結果
 └── lora/               # LoRAモデル（共有）
+
+~/ai-models/            # 共有モデルディレクトリ（プロジェクト外）
+└── stable-diffusion/   # Stable Diffusionチェックポイントモデル
 ```
 
 ### トレーニングデータの配置
@@ -117,6 +119,8 @@ kohya/dataset/images/[繰り返し数]_[識別名]/
 
 ### Stable Diffusionモデル
 
+モデルファイルはプロジェクト外の共有ディレクトリ `~/ai-models/stable-diffusion/` で管理されます。これにより複数のプロジェクトでモデルを共有でき、ディスク容量を節約できます。
+
 #### 自動ダウンロード（推奨）
 
 以下のコマンドでStable Diffusion v1.5モデルを自動的にダウンロードできます：
@@ -125,12 +129,14 @@ kohya/dataset/images/[繰り返し数]_[識別名]/
 make download-model
 ```
 
+モデルは `~/ai-models/stable-diffusion/` にダウンロードされます。
+
 #### 手動配置
 
 他のモデルを使用したい場合は、以下のディレクトリに手動で配置してください：
 
 ```
-webui/models/Stable-diffusion/
+~/ai-models/stable-diffusion/
 ```
 
 ### LoRAモデル
